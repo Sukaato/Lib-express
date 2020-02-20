@@ -1,5 +1,5 @@
 {
-  "name": "expressjs-es6-sample",
+  "name": "lib-express",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
@@ -23,7 +23,9 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "pug": "^2.0.4"
   },
   "devDependencies": {
     "jest": "^25.1.0",
