@@ -1,59 +1,33 @@
 {
   "name": "lib-express",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "license": "MIT",
+  "type": "module",
+  "main": "./server/app.js",
   "author": {
     "name": "Vaumoron Julien",
     "url": "https://github.com/Sukaato",
     "web": "https://sukaato.github.io"
   },
   "scripts": {
-    "start": "npm run prod",
-    "build": "npm-run-all clean transpile",
-    "server": "node ./dist-server/bin/www",
-    "dev": "NODE_ENV=development npm-run-all build server",
-    "prod": "NODE_ENV=production npm-run-all build server",
-    "transpile": "babel ./server --out-dir dist-server",
-    "clean": "rimraf dist-server",
-    "watch:dev": "nodemon",
-    "test": "jest"
+    "start": "nodemon ./server/app.js --exec babel-node --presets babel-preset-env"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mariadb": "^2.2.0",
     "morgan": "~1.9.1",
-    "mysql": "^2.18.1",
     "pug": "^2.0.4"
   },
   "devDependencies": {
-    "jest": "^25.1.0",
-    "rimraf": "^3.0.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.2",
-    "npm-run-all": "^4.1.5",
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4"
-  },
-  "nodemonConfig": {
-    "exec": "npm run dev",
-    "watch": [
-      "server/*",
-      "public/*"
-    ],
-    "ignore": [
-      "**/__tests__/**",
-      "*.test.js",
-      "*.spec.js"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "braces": "3.0.2"
   }
 }
