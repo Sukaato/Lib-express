@@ -1,0 +1,53 @@
+include ../components/icon
+
+header.uk-background-primary.uk-preserve-color.uk-box-shadow-medium(uk-sticky=".uk-navbar-container")
+    nav.uk-navbar-container.uk-navbar-transparent.uk-light(uk-navbar)
+        div.uk-narbar-left
+            a.uk-navbar-item.uk-logo(href="/") 
+                h1.uk-h1.uk-margin-remove-bottom #{name}
+
+        div.uk-navbar-right
+            ul.uk-iconnav
+                li.uk-navbar-item
+                    div(uk-toggle='target: #login')
+                        +icon('user')(class="uk-icon-button")
+
+    div#login(uk-modal)
+        div.uk-modal-body.uk-modal-dialog
+            button.uk-modal-close-default(type="button" uk-close)
+            ul.uk-child-width-expand(uk-tab="animation: uk-animation-fade")
+                li.uk-active
+                    a(href="#") Connexion
+                li
+                    a(href="#") Inscription
+            ul.uk-switcher.uk-margin
+                li(data-login)
+                    div
+                        div.uk-card-boby.uk-padding-small
+                            div.uk-margin.uk-form-child-width-1-1
+                                label(for="login_login")
+                                    | Nom : 
+                                    input#login_login.uk-input(name="login_login" type="text" placeholder="Nom d'utilisateur" required)
+                            div.uk-margin.uk-form-child-width-1-1
+                                label(for="password_login")
+                                    | Mot de passe : 
+                                    input#password_login.uk-input(name="password_login" type="password" placeholder="Mot de passe" required)
+                        footer.uk-card-footer
+                            button.uk-button.uk-button-primary(confirm uk-toggle="target: #login") Se connecter
+                li(data-signup)
+                    div
+                        div.uk-card-boby.uk-padding-small
+                            div.uk-margin.uk-form-child-width-1-1
+                                label(for="login_signup")
+                                    | Nom : 
+                                    input#login_signup.uk-input(name="login_signup" type="text" placeholder="Nom d'utilisateur" required)
+                            div.uk-margin.uk-form-child-width-1-1
+                                label(for="password")
+                                    | Mot de passe : 
+                                    input#password.uk-input(name="password" type="password" placeholder="Mot de passe" required)
+                            div.uk-margin.uk-form-child-width-1-1
+                                label(for="passwordConfirm")
+                                    | Confirmer le mot de passe : 
+                                    input#passwordConfirm.uk-input(name="passwordConfirm" type="password" placeholder="Mot de passe" required)
+                        footer.uk-card-footer
+                            button.uk-button.uk-button-primary(confirm uk-toggle="target: #login") Créer un compte

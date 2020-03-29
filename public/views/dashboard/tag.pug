@@ -1,0 +1,45 @@
+extends ../layouts/document
+include ../components/dashboard-header
+include ../components/icon
+include ../components/editButton
+include ../components/deleteButton
+
+block content
+    div.uk-card.uk-card-default
+        +dashboard-header("Gestionnaire de tag", "tag", "Ajouter un tag")
+            a.uk-link-reset(addTag uk-toggle="target: #form")
+                +icon('plus')(class="uk-icon-button uk-button-primary")
+
+        div.uk-card-boby.uk-padding-small
+            table.uk-table.uk-table-striped
+                thead
+                    tr
+                        th ID
+                        th.uk-width-expand Nom
+                        th Actions
+                tbody
+                    if tags && tags.length > 0
+                        each tag in tags
+                            tr.uk-box-shadow-hover-medium
+                                th(data-id) #{tag.id}
+                                th(data-tag) #{tag.tag}
+                                th.uk-flex.actions
+                                    +editButton("Éditer le tag")
+                                    +deleteButton("Suprimer le tag")
+                    else
+                        tr
+                            th 0
+                            th(colspan="2") Aucun tag
+
+    div#form(uk-modal)
+        div.uk-modal-body.uk-modal-dialog
+            button.uk-modal-close-default(type="button" uk-close)
+            h3.uk-modal-title(title)
+            div
+                div.uk-card-boby.uk-padding-small
+                    div.uk-margin.uk-form-child-width-1-1
+                        input.uk-input(name="tag" type="text" placeholder="Nom du tag" required)
+                footer.uk-card-footer
+                    button.uk-button.uk-button-primary(confirm uk-toggle="target: #form")
+
+    script(src="/src/js/tag.js")

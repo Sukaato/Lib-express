@@ -1,0 +1,54 @@
+extends ../layouts/document
+include ../components/dashboard-header
+include ../components/icon
+include ../components/editButton
+include ../components/deleteButton
+
+block content
+    div.uk-card.uk-card-default
+        +dashboard-header("Gestionnaire d'utilisateur", "user")
+
+        div.uk-card-boby.uk-padding-small
+            table.uk-table.uk-table-striped
+                thead
+                    tr
+                        th ID
+                        th.uk-width-2-5 Nom
+                        th.uk-width-2-5 Role
+                        th Actions
+                tbody
+                    if users && users.length > 0
+                        each user in users
+                            tr.uk-box-shadow-hover-medium
+                                th(data-id) #{user.id}
+                                th(data-login) #{user.login}
+                                th(data-role) #{user.role}
+                                th.uk-flex.actions
+                                    +editButton("Éditer l'utilisateur")
+                                    +deleteButton("Suprimer l'utilisateur")
+                    else
+                        tr
+                            th 0
+                            th(colspan="3") Aucun utilisateur
+
+    div#form(uk-modal)
+        div.uk-modal-body.uk-modal-dialog
+            button.uk-modal-close-default(type="button" uk-close)
+            h3.uk-modal-title Modifier l'utilisateur
+            div
+                div.uk-card-boby.uk-padding-small
+                    div.uk-margin.uk-form-child-width-1-1
+                        div.uk-margin
+                            label(for="login")
+                                | Nom : 
+                                input#login.uk-input(name="login" type="text" placeholder="Nom d'utilisateur" required)
+                        div.uk-margin
+                            label(for="user_role")
+                                | Role :
+                                select#user_role.uk-select(name="user_role")
+                                    option(value="")
+
+                footer.uk-card-footer
+                    button.uk-button.uk-button-primary(confirm uk-toggle="target: #form") Modifier l'utilisateur
+
+    script(src="/src/js/user.js")

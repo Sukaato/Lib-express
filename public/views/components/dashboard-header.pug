@@ -1,0 +1,14 @@
+include ./icon
+
+mixin dashboard-header(title, context, contextTitle)
+    header.uk-card-header
+        div.uk-grid-small.uk-flex-middle(uk-grid)
+            div.uk-width-auto
+                a(href=`/dashboard` uk-tooltip="title: Revenir au dashboard")
+                    +icon('arrow-left')(class="uk-icon-button")
+            div.uk-width-expand
+                h3.uk-catd-title.uk-margin-remove-bottom.uk-text-center #{title}
+
+            if block
+                div.uk-width-auto
+                    block

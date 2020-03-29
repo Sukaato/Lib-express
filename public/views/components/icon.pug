@@ -1,0 +1,10 @@
+//- 
+    - mixin to easily add an icon
+
+    - name: string of name of icon in UIKIT library
+        https://getuikit.com/docs/icon#library
+
+    - ratio: number by which the size of the icon should be multiplied
+        https://getuikit.com/docs/icon#ratio
+mixin icon(name, ratio)
+    span(uk-icon=`icon: ${name}; ${ratio ? 'ratio: ' + ratio : ''}`, class=`${attributes.class}`)

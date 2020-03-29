@@ -1,0 +1,15 @@
+mixin comment(comment)
+    - var { id, comment, createdAt, author } = comment
+
+    article.uk-comment.uk-comment-primary.uk-margin-small-bottom(id=`comment-${id}`)
+        header.uk-comment-header.uk-grid-medium.uk-flex-middle(uk-grid)
+            div.uk-width-auto
+                img.uk-comment-avatar(src="/src/img/avatar.jpg" width="80" height="80" alt="")
+            div.uk-width-expand
+                h4.uk-comment-title.uk-margin-remove
+                    a.uk-link-reset #{author}
+                ul.uk-comment-meta.uk-subnav.uk-subnav-divider.uk-margin-remove-top
+                    li posté le #{createdAt}
+
+        div.uk-comment-body
+            p #{comment}

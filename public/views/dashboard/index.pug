@@ -1,0 +1,50 @@
+extends ../layouts/document
+include ../components/icon
+
+block content
+    h2.uk-text-center Gestionnaires
+    div.uk-child-width-1-2(uk-grid)
+        if article
+            div
+                div.uk-card.uk-card-default
+                    header.uk-card-header.uk-padding-small
+                        h3
+                            +icon('file-text').uk-margin-small-right
+                            span Gestionnaires d'article
+                    div.uk-card-body
+                        p Nomber d'article: #{article.length}
+                    footer.uk-card-footer.uk-padding-small
+                        a.uk-button.uk-button-default.uk-button-small(href='/dashboard/article') Y acceder
+        if tag
+            div
+                div.uk-card.uk-card-default
+                    header.uk-card-header.uk-padding-small
+                        h3
+                            +icon('tag').uk-margin-small-right
+                            span Gestionnaires de tags
+                    div.uk-card-body
+                        p Nomber de tag: #{tag.length}
+                    footer.uk-card-footer.uk-padding-small
+                        a.uk-button.uk-button-default.uk-button-small(href='/dashboard/tag') Y acceder
+        if comment
+            div
+                div.uk-card.uk-card-default
+                    header.uk-card-header.uk-padding-small
+                        h3
+                            +icon('file-text').uk-margin-small-right
+                            span Gestionnaires de commentaire
+                    div.uk-card-body
+                        p Nomber de commentaire: #{comment.length}
+                    footer.uk-card-footer.uk-padding-small
+                        a.uk-button.uk-button-default.uk-button-small(href='/dashboard/commentaire') Y acceder
+        if user
+            div
+                div.uk-card.uk-card-default
+                    header.uk-card-header.uk-padding-small
+                        h3
+                            +icon('file-text').uk-margin-small-right
+                            span Gestionnaires d'utilisateur
+                    div.uk-card-body
+                        p Nomber d'utilisateur: #{user.length}
+                    footer.uk-card-footer.uk-padding-small
+                        a.uk-button.uk-button-default.uk-button-small(href='/dashboard/user') Y acceder

@@ -1,0 +1,7 @@
+include ./icon
+
+mixin editButton(tooltip)
+    div(uk-tooltip=`title: ${tooltip}` uk-toggle=`target: #form`)
+        button.action.edit.uk-button.uk-button-primary.uk-button-small.uk-padding-remove.uk-border-circle(
+            style="width:32px; height: 32px")
+            +icon('pencil')
