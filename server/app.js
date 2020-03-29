@@ -1,62 +1,73 @@
-import express from 'express';
-import path from 'path';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import createError from 'http-errors';
+import express from 'express';
+import helmet from 'helmet';
+import path from 'path';
 
-import { lib_express } from './database/connection/dbConnection';
-import { indexRouter } from './routes/index';
-import { usersRouter } from './routes/users';
+/* Database */
+import { database } from './database/connection';
+/* Middlewares */
+import { geolocationMiddleware } from './middlewares/geolocation.middleware';
+import { loggerMiddleware } from './middlewares/logger.middleware';
+/* Routes */
+import { router } from './routes/router';
+/* Logger */
+import { logger } from './utils/logger';
+import { tokenValidator } from './middlewares/validators/token.validator';
+
+const log = logger.getLogger("[MAIN]");
 
 const app = express();
 const PORT = process.env.NODE_PORT || 3000;
+const ENV = process.env.NODE_ENV || 'development';
 const dirs = {
-  views: '../public/views/',
-  public: 'public'
-};
+    views: '../public/views',
+    public: '../public'
+}; 
 
-app.set('views', path.join(__dirname, dirs.views));
-app.set('view engine', 'pug');
-
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(helmet());
 app.use(express.static(path.join(__dirname, dirs.public)));
 
+/* Defined view engin and directory */
+app.set('views', path.join(__dirname, dirs.views));
+app.set('view engine', 'pug');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.disable('x-powered-by');
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
+/* Middleware globaux */
+app.use(geolocationMiddleware);
+app.use(loggerMiddleware);
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  err.status = err.status || 500;
+/* Route */
+app.use('/', router.index);
+app.use('/article', router.article);
+app.use('/tag', router.tag);
+app.use('/dashboard', tokenValidator, router.dashboard.index);
+app.use('/dashboard/article', tokenValidator, router.dashboard.article);
+app.use('/dashboard/tag', tokenValidator, router.dashboard.tag);
+app.use('/dashboard/user', tokenValidator, router.dashboard.user);
+app.use('/dashboard/role', tokenValidator, router.dashboard.role);
+app.use('/login', router.login);
 
-  // console.log("ERROR STATUS: ", err.status);
-  
-  // render the error page
-  res.status(err.status);
-  res.render({title: "SERVER ERROR", error: {status: err.status.toString()}});
-});
+/* Handle error middlewares */
+app.use(router.error[404]);
+app.use(router.error[500]);
 
-lib_express.connect(err => {
-  if (err) {
-    console.log(`[ DATABASE ] [ ERROR ] ${err.sqlMessage}`);
-    throw `[ APP      ] [       ] L'application ne peux se lancer car la base de bonnée n'est pas accésible`;
-  } else {
-    app.listen(PORT, (err) => {
-      if (err) console.error('Unable to connect the server: ', err);
-      console.log(`Server listening on port ${PORT}`);
+database.getConnection()
+    .then((poolConnection) => {
+        app.listen(PORT, (err) => {
+            if (err) {
+                log.error('Unable to connect the server:', err);
+            } else {
+                log.info("Environement:", ENV);
+                log.info("La base de donnée est connecter");
+                log.info(`Server listening on http://localhost:${PORT}`);
+            }
+        });
+
+    }).catch((err) => {
+        log.fatal(`L'application ne peux se lancer car la base de bonnée n'est pas accésible`);
+        log.fatal(err);
     });
-  }
-});
-
-export default app;
