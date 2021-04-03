@@ -1,0 +1,33 @@
+include ./icon
+
+mixin article-detail(article)
+    - var { id, title, content, createdAt, updatedAt, author, tagList, commentsCount, isModified } = article
+    - var tooltipAnimation = "delay: 500; animation: uk-animation-scale-up;"
+
+    article.uk-article.uk-card.uk-card-default.uk-card-hover.uk-width-1-1.uk-margin-bottom(id=`article-${id}`)
+        header.article-header
+            div.uk-card-header.uk-padding-small
+                div.uk-grid-small.uk-flex-middle(uk-grid)
+
+                    div.uk-width-expand
+                        h3.uk-catd-title.uk-margin-remove-bottom
+                            a.uk-link-heading(href=`/article/${id}`) #{title}
+                        p.uk-text-meta.uk-margin-remove-top
+                            if isModified
+                                time(uk-tooltip=`title: Modifier le ${updatedAt}; ${tooltipAnimation}`) publié le #{createdAt} 
+                            else 
+                                time publié le #{createdAt} 
+                            a(href="") par #{author}
+        div.uk-card-body
+            p #{content}
+
+        footer.uk-card-footer
+            p 
+                if tagList && tagList.length > 0
+                    each tag in tagList
+                        span.uk-label.uk-margin-small-right(style="padding-bottom: 3px; ")
+                            a.uk-link-reset(href="#")
+                                +icon('tag', 0.9).uk-margin-small-right
+                                | #{tag}
+                else
+                    span aucun tag

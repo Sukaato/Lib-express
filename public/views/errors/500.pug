@@ -1,0 +1,11 @@
+extends ../layouts/document
+
+block content
+    div.uk-card.uk-card-default.uk-grid-collapse.uk-child-width-1-2.uk-margin(uk-grid)
+        div.uk-card-media-left.uk-cover-container
+            img.uk-padding-small(src="/src/img/500.jpg")
+            canvas(width="" height="")
+        div
+            div.uk-card-body.uk-padding-small.uk-padding-remove-left
+                h3.uk-card-title Internal server error
+                p #{error}

@@ -1,0 +1,12 @@
+extends ./layouts/document
+include ./components/article
+
+block content
+    pre #{JSON.stringify(articles)}
+    if articles
+        if articles.length > 0
+            div(uk-scrollspy="cls: uk-animation-slide-bottom-medium; target: .uk-card; delay: 175")
+                each article in articles
+                    +article(article)
+        else
+            p length : #{articles.length}

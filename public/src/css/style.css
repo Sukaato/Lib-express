@@ -1,0 +1,23 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body > main {
+  flex-grow: 1;
+  padding-top: 16px;
+}
+
+hr {
+  margin: 0;
+}
+
+span.uk-label, .uk-table tbody th {
+  text-transform: none;
+}

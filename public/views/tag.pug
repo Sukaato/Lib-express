@@ -1,0 +1,23 @@
+extends ./layouts/document
+include ./components/icon
+
+block content
+    div.uk-card.uk-card-default
+        div.uk-card-header
+            h3.uk-card-title 
+                +icon('tag')
+                span.uk-margin-small-left Liste des tags
+        div.uk-card-boby.uk-padding-small
+            table.uk-table.uk-table-divider.uk-table-small
+                thead
+                    tr
+                        th Nom du tag
+                tbody
+                    if tags && tags.length > 0
+                        each tag in tags
+                            tr.uk-box-shadow-hover-medium(id=`tag-${tag.id}`)
+                                th.uk-flex
+                                    a.uk-link-heading.uk-width-expand(href=`/tag/${tag.tag}?page=1`) #{tag.tag}
+                    else
+                        tr
+                            th Aucun tag

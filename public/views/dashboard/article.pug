@@ -1,0 +1,70 @@
+extends ../layouts/document
+include ../components/icon
+include ../components/dashboard-header
+include ../components/editButton
+include ../components/deleteButton
+
+block content
+    script(src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js")
+    div.uk-card.uk-card-default
+        +dashboard-header("Gestionnaire d'article", "article", "Créer un nouvel article")
+            a(addArticle uk-toggle="target: #form" uk-tooltip='title: Créer un nouvel article')
+                +icon('plus')(class="uk-icon-button uk-button-primary")
+
+        div.uk-card-boby.uk-padding-small
+            table.uk-table.uk-table-striped
+                thead
+                    tr
+                        th ID
+                        th Titre
+                        th Auteur
+                        th Tag
+                        th Commentaire
+                        th.uk-text-center Actions
+                tbody
+                    if articles && articles.length > 0
+                        each article in articles
+                            tr.uk-box-shadow-hover-medium
+                                th(data-id) #{article.id}
+                                th(data-title).uk-width-2-5 #{article.title}
+                                th.uk-width-1-5 #{article.author}
+                                th(data-tagCount) #{article.count.tag}
+                                th #{article.count.comment}
+                                th.uk-flex.uk-flex-center.actions
+                                    a(href=`/article/${article.id}` uk-tooltip="title: Voir l'article")
+                                        +icon('link')(class="uk-icon-button uk-margin-small-right")
+                                    +editButton("Éditer l'article")
+                                    +deleteButton("Supprimer l'article")
+                    else
+                        tr
+                            th(data-id) 0
+                            th(colspan=5) Aucun article
+
+    div#form(uk-modal)
+        div.uk-modal-body.uk-modal-dialog.uk-width-2-3
+            div(uk-grid)
+                div.uk-width-3-4(data-article)
+                    button.uk-modal-close-default(type="button" uk-close)
+                    h3.uk-modal-title(title)
+                    div
+                        div.uk-card-boby.uk-padding-small
+                            div.uk-margin.uk-form-child-width-1-1
+                                input.uk-input(name="title" type="text" placeholder="Titre de l'article" required)
+                            div.uk-margin
+                                div#editor
+                        footer.uk-card-footer
+                            button.uk-button.uk-button-primary(confirm uk-toggle="target: #form")
+                div.uk-width-1-4
+                    header
+                        h3 Tags
+                    div
+                        ul(uk-list data-tags)
+                            if tags && tags.length > 0
+                                each tag in tags
+                                    li
+                                        label(for=`${tag.tag}`)
+                                            input.uk-checkbox(id=`${tag.id}` name=`${tag.tag}` type="checkbox")
+                                            span.uk-margin-small-left #{tag.tag}
+
+    script(src="/src/js/ckEditor.js")
+    script(src="/src/js/article.js")

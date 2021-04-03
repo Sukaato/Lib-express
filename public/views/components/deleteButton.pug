@@ -1,0 +1,7 @@
+include ./icon
+
+mixin deleteButton(tooltip)
+    div(uk-tooltip=`title: ${tooltip}`)
+        button.action.delete.uk-button.uk-button-danger.uk-button-small.uk-padding-remove.uk-border-circle.uk-margin-small-left(
+            style="width:32px; height: 32px")
+            +icon('trash')

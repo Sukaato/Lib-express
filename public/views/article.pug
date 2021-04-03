@@ -1,0 +1,13 @@
+extends ./layouts/document
+include ./components/article-detail
+include ./components/comment
+
+block content
+    if article
+        +article-detail(article)
+
+    section#comments.uk-card.uk-card-default.uk-padding-small.uk-margin-medium-top.uk-margin-large-bottom
+        h3 Commentaires
+        if comments
+            each comment in comments
+                +comment(comment)

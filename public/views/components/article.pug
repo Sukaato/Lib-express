@@ -1,0 +1,47 @@
+include ./icon
+
+mixin article(article)
+    - var { id, title, content, createdAt, updatedAt, author, tags, commentsCount, isModified } = article
+    - var tooltipAnimation = "delay: 300; animation: uk-animation-slide-top-medium;"
+
+    article.uk-article.uk-card.uk-card-default.uk-card-hover.uk-width-auto.uk-margin
+        header.article-header.uk-card-header
+            div.uk-grid-small.uk-flex-middle(uk-grid)
+                div.uk-width-auto
+                    img.uk-border-circle(width="40" height="40" src="/src/img/avatar.jpg" uk-tooltip=`title: ${author}; ${tooltipAnimation}`)
+
+                div.uk-width-expand
+                    h3.uk-catd-title.uk-margin-remove-bottom
+                        a.uk-link-heading(href=`/article/${id}`) #{title}
+                    p.uk-text-meta.uk-margin-remove-top
+                        if isModified
+                            time(uk-tooltip=`title: Modifier le ${updatedAt}; ${tooltipAnimation}`) publié le #{createdAt}
+                        else 
+                            time publié le #{createdAt}
+
+                div.uk-width-auto
+                    +icon('tag')(class="uk-icon-button")
+                    div.uk-card(uk-dropdown="mode: hover; animation: uk-animation-slide-top-medium; duration: 175; pos: bottom; flip: true")
+                            p 
+                                +icon('tag')
+                                span.uk-margin-small-left Liste des tags
+                            hr
+                            ul.uk-list
+                            if tags && tags.length > 0
+                                each tag in tags
+                                    li
+                                        a.uk-link-heading #{tag}
+                            else
+                                li aucun tag
+        div.uk-card-body
+            p #{content}
+
+        footer.uk-card-footer
+            div.uk-grid-small.uk-child-width-auto(uk-grid)
+                div
+                    a.uk-button.uk-button-default.uk-button-small(href=`/article/${id}`) lire l'article
+
+                div.uk-margin-left
+                    a.uk-button.uk-button-text(href=`/article/${id}#comments`) 
+                        +icon('comment')(class="comments")
+                        span(style="margin-left: 8px") #{commentsCount} commentaire#{commentsCount > 1 ? 's' : ''}
